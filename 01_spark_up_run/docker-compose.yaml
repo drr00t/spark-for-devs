@@ -1,0 +1,50 @@
+services:
+  spark-master:
+    container_name: spark-master
+    build: .
+    ports:
+      - "4040:4040"
+      - "9090:8080"
+      - "7077:7077"
+    volumes:
+      - ./spark-data:/opt/spark-data
+    environment:
+      - SPARK_LOCAL_IP=spark-master
+      - SPARK_MASTER_HOST=spark-master
+      - SPARK_WORKLOAD=master
+    networks:
+      - spark_dev_net
+
+  spark-worker:
+    build: .
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=2
+      - SPARK_WORKER_MEMORY=2G
+      - SPARK_DRIVER_MEMORY=2G
+      - SPARK_WORKLOAD=worker
+    networks:
+      - spark_dev_net
+
+  minio:
+    container_name: minio
+    hostname: minio
+    image: quay.io/minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=minio
+      - MINIO_ROOT_PASSWORD=minio123
+    volumes:
+      - ./minio-data:/data
+    command: ["server", "/data", "--console-address", ":9001"]
+    networks:
+      - spark_dev_net
+
+networks:
+  spark_dev_net:
+    name: spark_dev_net
+    external: true
