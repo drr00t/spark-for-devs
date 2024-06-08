@@ -34,3 +34,17 @@ spark-submit --master spark://192.168.15.6:7077 --executor-memory 500M --driver-
 ```console
 spark-submit --master spark://192.168.15.6:7077 --executor-memory 10G --driver-memory 10G  main.py 
 ```
+
+### execute simple1_minio
+
+#### execution local
+
+```console
+spark-submit --packages org.apache.spark:spark-hadoop-cloud_2.12:3.3.4,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 main.py
+```
+
+#### execution local cluster
+
+```console
+spark-submit --packages org.apache.spark:spark-hadoop-cloud_2.12:3.3.4,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 --master spark://192.168.15.6:7077 main.py
+```
