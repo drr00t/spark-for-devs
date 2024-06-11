@@ -15,6 +15,7 @@ USER spark
 WORKDIR /opt/spark
 
 ENV SPARK_LOG_DIR="/opt/spark/logs" \
+    SPARK_EVENTS_DIR="/opt/spark/spark-events" \
     SPARK_MASTER="spark://spark-master:7077" \
     SPARK_MASTER_HOST=spark-master \
     SPARK_MASTER_PORT=7077 \
@@ -24,11 +25,12 @@ ENV SPARK_LOG_DIR="/opt/spark/logs" \
     SPARK_WORKER_PORT=7000 \
     SPARK_WORKER_WEBUI_PORT=8080 
 
-COPY spark-defaults.conf "$SPARK_HOME/conf"
+COPY spark-defaults.conf "./conf/"
 
 EXPOSE 8080 7077 7000 7001 7002 7003 4040 4041 4042 4043 18080
 
 RUN mkdir -p $SPARK_LOG_DIR && \
+    mkdir -p $SPARK_EVENTS_DIR && \
     touch $SPARK_MASTER_LOG && \
     touch $SPARK_WORKER_LOG && \
     ln -sf /dev/stdout $SPARK_MASTER_LOG && \
