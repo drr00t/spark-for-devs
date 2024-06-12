@@ -19,8 +19,8 @@ services:
       - SPARK_MASTER_HOST=spark-master
       - SPARK_WORKLOAD=master
       - SPARK_NO_DAEMONIZE=true
-    # networks:
-    #   - spark_dev_net
+    networks:
+      - spark_dev_net
 
   spark-worker:
     container_name: spark-worker
@@ -37,8 +37,8 @@ services:
       - SPARK_NO_DAEMONIZE=true
     volumes:
       - ./spark-logs:/opt/spark/spark-events
-    # networks:
-    #   - spark_dev_net
+    networks:
+      - spark_dev_net
 
   spark-history:
     container_name: spark-history
@@ -53,8 +53,8 @@ services:
       - SPARK_MASTER=spark://spark-master:7077
       - SPARK_WORKLOAD=history
       - SPARK_NO_DAEMONIZE=true
-    # networks:
-    #   - spark_dev_net
+    networks:
+      - spark_dev_net
 
   minio:
     container_name: minio
@@ -69,11 +69,10 @@ services:
     volumes:
       - ./minio-data:/data
     command: ["server", "/data", "--console-address", ":9001"]
-    # networks:
-    #   - spark_dev_net
-# volumes:
-#   spark-logs:
-# networks:
-#   spark_dev_net:
-#     name: spark_dev_net
-#     external: true
+    networks:
+      - spark_dev_net
+
+networks:
+  spark_dev_net:
+    name: spark_dev_net
+    external: true
