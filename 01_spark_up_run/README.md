@@ -27,7 +27,8 @@ spark-submit  main.py
 
 ### execution in local cluster
 ```console
-spark-submit --master spark://192.168.15.6:7077 --executor-memory 500M --driver-memory 500M  main.py 
+spark-submit --properties-file conf/spark-defaults.conf --packages org.apache.spark:spark-hadoop-cloud_2.12:3.3.4,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 --master spark://192.168.122.1:7077 main.py
+
 ```
 
 #### execution in local cluster (not enough resource) stay waiting forever
@@ -46,5 +47,6 @@ spark-submit --packages org.apache.spark:spark-hadoop-cloud_2.12:3.3.4,org.apach
 #### execution local cluster
 
 ```console
-spark-submit --packages org.apache.spark:spark-hadoop-cloud_2.12:3.3.4,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 --master spark://192.168.15.6:7077 main.py
+spark-submit --properties-file conf/spark-defaults.conf --packages org.apache.spark:spark-hadoop-cloud_2.12:3.3.4,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 --master spark://192.168.122.1:7077 main.py
+
 ```

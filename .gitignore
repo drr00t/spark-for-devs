@@ -190,6 +190,9 @@ apps/datasets/*.json
 apps/datasets/*.jsonl
 apps/datasets/*.csv
 
+**/spark-jars/*
+**/spark-logs/app-*
+
 .ipynb*
 
 **/metastore_db/

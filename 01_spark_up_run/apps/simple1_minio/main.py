@@ -26,14 +26,8 @@ def setup_session_s3_hadoop(_builder: SparkSession.Builder) -> SparkSession.Buil
     # """ reference for S3 file handling via Spark: https://hadoop.apache.org/docs/current/hadoop-aws/tools/hadoop-aws/committers.html#Meet_the_S3A_Committers """
 
     _builder.config("spark.hadoop.fs.s3a.connection.timeout", "60000").config(
-        "spark.hadoop.fs.s3a.path.style.access", "true"
-    ).config(
         "spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem"
-    ).config(
-        "spark.hadoop.fs.s3a.connection.ssl.enabled", "false"
-    ).config(
-        "spark.hadoop.fs.s3a.committer.magic.enabled", "true"
-    ).config(
+    ).config("spark.hadoop.fs.s3a.committer.magic.enabled", "true").config(
         "spark.hadoop.fs.s3a.committer.name", "magic"
     ).config(
         "spark.hadoop.fs.s3a.committer.generate.uuid", "true"
@@ -75,7 +69,7 @@ def create_session(_builder: SparkSession.Builder):
 
     sql = builder.getOrCreate()
 
-    sql.sparkContext.setLogLevel("WARN")
+    sql.sparkContext.setLogLevel("INFO")
 
     return sql
 
@@ -110,11 +104,16 @@ def main(app_name: str = "Simple1"):
         schema="a long, b double, c string, d date, e timestamp",
     )
 
-    df.write.mode("overwrite").format("parquet").save("s3a://spark-4devs/dataframe")
+    df.write.mode("overwrite").format("parquet").save(
+        "s3a://spark-4devs/dataframe.parquet"
+    )
 
-    df_r: DataFrame = sql.read.format("parquet").load("s3a://spark-4devs/dataframe")
+    df_r: DataFrame = sql.read.format("parquet").load(
+        "s3a://spark-4devs/dataframe.parquet"
+    )
 
     df_r.show(truncate=False)
+    df.explain()
 
     sql.stop()
 
