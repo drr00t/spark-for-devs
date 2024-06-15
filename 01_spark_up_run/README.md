@@ -2,6 +2,12 @@ https://medium.com/@SaphE/testing-apache-spark-locally-docker-compose-and-kubern
 
 ## run spark cluster 
 
+### create network
+
+```console
+docker network create spark_dev_net
+```
+
 ### build local image
 
 ```console
