@@ -31,6 +31,8 @@ RUN mkdir -p /opt/spark/spark-events
 
 COPY ./entrypoint.sh /
 
+COPY spark-defaults.conf "/opt/spark/conf/"
+
 USER spark    
 
 # Set the Spark home directory
@@ -48,8 +50,6 @@ ENV SPARK_MASTER="spark://spark-master:7077" \
     SPARK_WORKER_PORT=7000 \
     SPARK_WORKER_WEBUI_PORT=8080 \
     SPARK_HOME="/opt/spark"
-
-COPY spark-defaults.conf "./conf/"
 
 EXPOSE 8080 7077 7000 7001 7002 7003 4040 4041 4042 4043 18080 8081 8082
 
