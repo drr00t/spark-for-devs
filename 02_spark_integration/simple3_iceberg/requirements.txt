@@ -1,0 +1,8 @@
+-r ../../01_spark_up_run/apps/requirements.pyspark.txt
+jupyterlab==4.2.2
+jupyterlab-code-formatter==2.2.1
+isort==5.13
+black==24.4.2
+ipywidgets==8.1.3
+jupyterlab-lsp==5.1.0
+python-lsp-server[pylsp]==1.11.0
