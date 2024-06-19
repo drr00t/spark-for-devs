@@ -35,6 +35,9 @@ services:
       - SPARK_DRIVER_MEMORY=4G
       - SPARK_WORKLOAD=worker
       - SPARK_NO_DAEMONIZE=true
+      - AWS_ACCESS_KEY_ID=pzpuAbmlUwAIu4iYPsp7
+      - AWS_SECRET_ACCESS_KEY=VNhWmNnhSsIIVoUzSKre8zSjcR6XffXORl1s16Vh
+      - AWS_REGION=us-east-1
     volumes:
       - ./spark-logs:/opt/spark/spark-events
     networks:

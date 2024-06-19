@@ -8,7 +8,7 @@ Credentials = namedtuple("Option", "accessKey secretKey")
 
 
 def load_credentials() -> Credentials:
-    f = open("creds/credentials.json")
+    f = open("creds/credentials-6.json")
     data = json.load(f)
     accessKey: str = data["accessKey"]
     secretKey: str = data["secretKey"]
@@ -200,11 +200,11 @@ def carregando_dataset_irpf(session: SparkSession):
 
 def carregando_dataset_irpf_schema(session: SparkSession):
 
-    # session.read.table("exploration.raw.estabelecimentos").printSchema()
+    session.read.table("exploration.raw.estabelecimentos").printSchema()
 
-    # session.sql(
-    #     "ALTER TABLE exploration.raw.estabelecimentos ADD COLUMN DATA_SITUACAO_CADASTRAL_TIPADA date;"
-    # ).show()
+    session.sql(
+        "ALTER TABLE exploration.raw.estabelecimentos ADD COLUMN DATA_SITUACAO_CADASTRAL_TIPADA date;"
+    ).show()
 
     session.sql(
         "UPDATE exploration.raw.estabelecimentos SET DATA_SITUACAO_CADASTRAL_TIPADA = to_date(DATA_SITUACAO_CADASTRAL,'yyyyMMdd')"
