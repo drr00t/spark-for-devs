@@ -13,7 +13,21 @@ RUN set -ex; \
     apt autoremove; \
     rm -rf /var/lib/apt/lists/*
 
+# RUN set -ex; \
+#     apt update; \
+#     apt install -y rsync openssh-client openssh-server openjdk-17-jdk wget git make curl build-essential; \
+#     apt clean; \
+#     apt autoremove; \
+#     rm -rf /var/lib/apt/lists/*
+
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+
+#RUN . $HOME/.cargo/env
+
 RUN useradd -m -u 1000 spark
+
+#RUN git clone https://github.com/apache/datafusion-comet.git && cd datafusion-comet && make release PROFILES="-Pspark-3.4"
+#RUN cd ..
 
 # to use external volume for for logs 
 RUN addgroup --gid 1001 logs
@@ -25,9 +39,9 @@ RUN tar -xvf spark-${SPARK_VERSION}-bin-hadoop3.tgz && \
     mv spark-${SPARK_VERSION}-bin-hadoop3 /opt/spark && \
     rm spark-${SPARK_VERSION}-bin-hadoop3.tgz
 
-RUN chown -R spark:spark /opt/spark
-
 COPY spark-jars/comet-spark-spark3.4_2.12-0.1.0-SNAPSHOT.jar /opt/spark/jars
+
+RUN chown -R spark:spark /opt/spark
 
 RUN mkdir -p /opt/spark/spark-events
 

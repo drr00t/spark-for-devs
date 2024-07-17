@@ -1,0 +1,19 @@
+---
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: spark-cluster
+servers: 1
+# agents: 1
+image: docker.io/rancher/k3s:v1.28.8-k3s1
+ports:
+  - port: 38080:80 # same as `--port '8080:80@loadbalancer'`
+    nodeFilters:
+      - loadbalancer
+# network: spark_kube_net
+# subnet: 10.10.42.0/16
+registries: # define how registries should be created or used
+  create: # creates a default registry to be used with the cluster; same as `--registry-create registry.localhost`
+    name: registry.localhost
+    host: "0.0.0.0"
+    hostPort: "5000"

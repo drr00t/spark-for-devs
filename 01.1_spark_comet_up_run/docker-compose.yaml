@@ -1,8 +1,7 @@
 services:
   spark-master:
     container_name: spark-master
-    # build: .
-    image: spark:3.4-comet
+    build: .
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
       interval: 5s
@@ -25,8 +24,7 @@ services:
 
   spark-worker:
     container_name: spark-worker
-    # build: .
-    image: spark:3.4-comet
+    build: .
     depends_on:
       - spark-master
     environment:
@@ -47,8 +45,7 @@ services:
 
   spark-history:
     container_name: spark-history
-    # build: .
-    image: spark:3.4-comet
+    build: .
     depends_on:
       - spark-master
     ports:
