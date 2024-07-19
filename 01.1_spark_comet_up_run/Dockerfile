@@ -40,6 +40,8 @@ RUN tar -xvf spark-${SPARK_VERSION}-bin-hadoop3.tgz && \
     rm spark-${SPARK_VERSION}-bin-hadoop3.tgz
 
 COPY spark-jars/comet-spark-spark3.4_2.12-0.1.0-SNAPSHOT.jar /opt/spark/jars
+COPY spark-jars/iceberg-aws-bundle-1.5.2.jar /opt/spark/jars
+COPY spark-jars/iceberg-spark-runtime-3.4_2.12-1.5.2.jar /opt/spark/jars
 
 RUN chown -R spark:spark /opt/spark
 

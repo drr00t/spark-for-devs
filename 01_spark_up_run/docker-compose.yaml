@@ -1,7 +1,7 @@
 services:
   spark-master:
     container_name: spark-master
-    # build: .
+    build: .
     image: spark:3.4-comet
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
@@ -25,16 +25,16 @@ services:
 
   spark-worker:
     container_name: spark-worker
-    # build: .
+    build: .
     image: spark:3.4-comet
     depends_on:
       - spark-master
     environment:
       - SPARK_MASTER=spark://spark-master:7077
-      - SPARK_WORKER_CORES=2
-      - SPARK_WORKER_MEMORY=4G
-      - SPARK_DRIVER_CORES=1
-      - SPARK_DRIVER_MEMORY=4G
+      - SPARK_WORKER_CORES=3
+      - SPARK_WORKER_MEMORY=2G
+      - SPARK_DRIVER_CORES=2
+      - SPARK_DRIVER_MEMORY=2G
       - SPARK_WORKLOAD=worker
       - SPARK_NO_DAEMONIZE=true
       - AWS_ACCESS_KEY_ID=pzpuAbmlUwAIu4iYPsp7
@@ -47,7 +47,7 @@ services:
 
   spark-history:
     container_name: spark-history
-    # build: .
+    build: .
     image: spark:3.4-comet
     depends_on:
       - spark-master
@@ -59,6 +59,26 @@ services:
       - SPARK_MASTER=spark://spark-master:7077
       - SPARK_WORKLOAD=history
       - SPARK_NO_DAEMONIZE=true
+    networks:
+      - spark_dev_net
+
+  spark-thrift:
+    container_name: spark-thrift
+    build: .
+    image: spark:3.4-comet
+    depends_on:
+      - spark-master
+    ports:
+      - "10000:10000"
+    volumes:
+      - ./spark-logs:/opt/spark/spark-events
+    environment:
+      - SPARK_LOCAL_IP=spark-thrift
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKLOAD=thrift
+      - SPARK_NO_DAEMONIZE=true
+      - HIVE_SERVER2_THRIFT_PORT=10000
+      - HIVE_SERVER2_THRIFT_BIND_HOST=spark-thrift
     networks:
       - spark_dev_net
 

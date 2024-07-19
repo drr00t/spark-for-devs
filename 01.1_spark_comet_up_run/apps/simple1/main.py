@@ -1,12 +1,12 @@
-from pyspark.sql import SparkSession
+from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql.functions import col, date_format
 from datetime import datetime, date
 import os
 from pyspark.sql import Row
 
 
-def init_spark():
-    builder = SparkSession.builder.appName("Simple1")
+def init_spark() -> SparkSession:
+    builder: SparkSession.Builder = SparkSession.builder.appName("Simple1")
 
     sql = builder.getOrCreate()
 
@@ -16,8 +16,8 @@ def init_spark():
 
 
 def main():
-    sql = init_spark()
-    df = sql.createDataFrame(
+    sql: SparkSession = init_spark()
+    df: DataFrame = sql.createDataFrame(
         [
             Row(
                 a=1,
@@ -43,7 +43,8 @@ def main():
         ],
         schema="a long, b double, c string, d date, e timestamp",
     )
-
+    sql.sql("")
+    df.writeTo("exploring.product_sales").using("iceberg").create()
     df.show(truncate=False)
     sql.stop()
 

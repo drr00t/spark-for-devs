@@ -20,9 +20,11 @@ then
 
 cd ${SPARK_HOME}/bin && ./spark-class org.apache.spark.deploy.history.HistoryServer
 
-elif [ "$SPARK_WORKLOAD" == "submit" ];
+elif [ "$SPARK_WORKLOAD" == "thrift" ];
 then
-    echo "SPARK SUBMIT"
+
+cd ${SPARK_HOME}/bin && ./sbin/start-thriftserver.sh
+
 else
-    echo "Undefined Workload Type $SPARK_WORKLOAD, must specify: master, worker, history, submit"
+    echo "Undefined Workload Type $SPARK_WORKLOAD, must specify: master, worker, history, thrift"
 fi

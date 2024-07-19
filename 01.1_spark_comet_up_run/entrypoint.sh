@@ -20,6 +20,11 @@ then
 
 cd ${SPARK_HOME}/bin && ./spark-class org.apache.spark.deploy.history.HistoryServer
 
+elif [ "$SPARK_WORKLOAD" == "thrift" ];
+then
+
+cd ${SPARK_HOME}/sbin && ./start-thriftserver.sh
+
 elif [ "$SPARK_WORKLOAD" == "submit" ];
 then
     echo "SPARK SUBMIT"
