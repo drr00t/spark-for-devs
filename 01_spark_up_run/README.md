@@ -1,6 +1,12 @@
+### Referece work 
 https://medium.com/@SaphE/testing-apache-spark-locally-docker-compose-and-kubernetes-deployment-94d35a54f222
 
 ## run spark cluster 
+
+Spark cluster with:
+
+- Dynamic workers provisioning via scale of docker compose
+- History server to allow log analyses after job finish
 
 ### create network
 
@@ -13,6 +19,10 @@ docker network create spark_dev_net
 ```console
 docker compose build
 ```
+
+### setup path for applications logs 
+
+aplication must generate logs into volume mapped used by history server then you can see all spark statistics even after job finish.
 
 ### start up cluster
 ```console

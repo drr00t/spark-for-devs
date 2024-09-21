@@ -62,26 +62,6 @@ services:
     networks:
       - spark_dev_net
 
-  spark-thrift:
-    container_name: spark-thrift
-    build: .
-    image: spark:3.4-comet
-    depends_on:
-      - spark-master
-    ports:
-      - "10000:10000"
-    volumes:
-      - ./spark-logs:/opt/spark/spark-events
-    environment:
-      - SPARK_LOCAL_IP=spark-thrift
-      - SPARK_MASTER=spark://spark-master:7077
-      - SPARK_WORKLOAD=thrift
-      - SPARK_NO_DAEMONIZE=true
-      - HIVE_SERVER2_THRIFT_PORT=10000
-      - HIVE_SERVER2_THRIFT_BIND_HOST=spark-thrift
-    networks:
-      - spark_dev_net
-
   minio:
     container_name: minio
     hostname: minio
