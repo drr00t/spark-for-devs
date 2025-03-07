@@ -1,0 +1,4 @@
+pre-commit
+pex==2.2.2
+pytest
+-r ./requirements.txt
